@@ -21,8 +21,14 @@ public class EvaluationService {
 	static class SpeedConverter {
 
 		public static long toMilesPerHour(double kilometersPerHour) {
-			// TODO Write an implementation for this method declaration
-			return 0;
+			if(kilometersPerHour < 0) {
+				return -1;
+			}
+			else {
+				long milesPerHour = Math.round(kilometersPerHour * .62);
+				return milesPerHour;
+			}
+			
 		}
 
 		/**
@@ -41,8 +47,13 @@ public class EvaluationService {
 		 * Value"
 		 */
 		public static String printConversion(double kilometersPerHour) {
-			// TODO Write an implementation for this method declaration
-			return null;
+			if(kilometersPerHour < 0) {
+				return "Invalid Value";
+			}
+			else {
+				long milesPerHour = Math.round(kilometersPerHour * .62);
+				return kilometersPerHour + " km/h = " + milesPerHour + " mi/h";
+			}
 		}
 	}
 
@@ -67,8 +78,15 @@ public class EvaluationService {
 	 * Value".
 	 */
 	public String printMegaBytesAndKiloBytes(int XX) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		if(XX < 0) {
+			return "Invalid Value";
+		}
+		else {
+			int YY = XX / 1024;
+			int ZZ = XX % 1024;
+			return XX + " KB = " + YY + " MB and " + ZZ + " KB";
+		}
+		
 	}
 
 	/**
@@ -91,8 +109,10 @@ public class EvaluationService {
 	 * If the hourOfDay parameter is less than 0 or greater than 23, return false.
 	 */
 	public boolean shouldWakeUp(boolean isBarking, int hourOfDay) {
-		// TODO Write an implementation for this method declaration
-		return false;
+		if(isBarking && (hourOfDay < 8 || hourOfDay > 22) && hourOfDay >= 0 && hourOfDay <= 23) {
+			return true;
+		}
+		else return false;
 	}
 
 	/**
@@ -107,8 +127,22 @@ public class EvaluationService {
 	 * Otherwise, return false;
 	 */
 	public boolean areEqualByThreeDecimalPlaces(double firstNum, double secondNum) {
-		// TODO Write an implementation for this method declaration
-		return false;
+		firstNum *= 1000;
+		secondNum *= 1000;
+		if (firstNum < 0) {
+			firstNum = Math.ceil(firstNum);
+		}
+		else firstNum = Math.floor(firstNum);
+		
+		if (secondNum < 0) {
+			secondNum = Math.ceil(secondNum);
+		}
+		else secondNum = Math.floor(secondNum);
+		
+		if (firstNum == secondNum) {
+			return true;
+		}
+		else return false;
 	}
 
 	/**
@@ -124,7 +158,9 @@ public class EvaluationService {
 	static class TeenNumberChecker {
 
 		public static boolean hasTeen(int x, int y, int z) {
-			// TODO Write an implementation for this method declaration
+			if(isTeen(x) || isTeen(y) || isTeen(z)) {
+				return true;
+			}
 			return false;
 		}
 
@@ -132,8 +168,10 @@ public class EvaluationService {
 		// Then pass the parameter to hasTeen method
 
 		public static boolean isTeen(int number) {
-			// TODO Write an implementation for this method declaration
-			return false;
+			if (number >= 13 && number <= 19) {
+				return true;
+			}
+			else return false;
 		}
 	}
 
@@ -153,8 +191,14 @@ public class EvaluationService {
 	 * ZZ represents the calculated days.
 	 */
 	public String printYearsAndDays(long minutes) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		if (minutes < 0) {
+			return "Invalid Value";
+		}
+		else{
+			long years = minutes / 525600;
+			long days = minutes % 525600 / 1440;
+			return minutes + " min = " + years + " y and " + days + " d";
+		}
 	}
 
 	/**
@@ -167,8 +211,30 @@ public class EvaluationService {
 	 * statement or switch statement whatever is easier for you.
 	 */
 	public String printNumberInWord(int number) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		switch(number) {
+		case 0:
+			return "ZERO";
+		case 1:
+			return "ONE";
+		case 2:
+			return "TWO";
+		case 3:
+			return "THREE";
+		case 4:
+			return "FOUR";
+		case 5:
+			return "FIVE";
+		case 6:
+			return "SIX";
+		case 7:
+			return "SEVEN";
+		case 8:
+			return "EIGHT";
+		case 9:
+			return "NINE";
+		default:
+			return "OTHER";
+		}
 	}
 
 	/**
@@ -191,8 +257,21 @@ public class EvaluationService {
 	 * and there is no resulting remainder.
 	 */
 	public int getGreatestCommonDivisor(int first, int second) {
-		// TODO Write an implementation for this method declaration
-		return 0;
+		if (first < 10 || second < 10) {
+			return -1;
+		}
+		else {
+			int remainder = -1;
+			do {
+				remainder = first % second;
+				if(remainder > 0) {
+					first = second;
+					second = remainder;
+				}
+			} while (remainder != 0);
+			return second;
+			
+		}
 	}
 
 	/**
@@ -209,8 +288,19 @@ public class EvaluationService {
 	 * invalid value.
 	 */
 	public int sumFirstAndLastDigit(int num) {
-		// TODO Write an implementation for this method declaration
-		return 0;
+		if (num < 0) {
+			return -1;
+		}
+		else {
+			Integer firstDigit;
+			Integer lastDigit;
+			lastDigit = num % 10;
+			while(num > 9) {
+				num /= 10;
+			}
+			firstDigit = num;
+			return firstDigit + lastDigit;
+		}
 	}
 
 	/**
@@ -220,8 +310,11 @@ public class EvaluationService {
 	 * reverses a String. Example: reverse("example"); -> "elpmaxe"
 	 */
 	public String reverse(String string) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		String reversedString = "";
+		for (int count = string.length() - 1; count > -1; count--) {
+			reversedString += string.charAt(count);
+		}
+		return reversedString;
 	}
 
 	/**
