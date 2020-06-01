@@ -2,6 +2,7 @@ package com.revature.eval.java.core;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Vector;
 
 public class EvaluationService {
 
@@ -325,8 +326,22 @@ public class EvaluationService {
 	 * long name like Portable Network Graphics to its acronym (PNG).
 	 */
 	public String acronym(String phrase) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		String acronym = "";
+		String[] words = phrase.split(" ");
+		for(String word : words) {
+			if (word.contains("-")) {
+				String[] wordPieces = word.split("-");
+				for(String wordPiece : wordPieces) {
+					acronym += wordPiece.charAt(0);
+				}
+			}
+			else {
+				acronym += word.charAt(0);
+			}
+			
+		}
+		acronym = acronym.toUpperCase();
+		return acronym;
 	}
 
 	/**
@@ -381,18 +396,27 @@ public class EvaluationService {
 		}
 
 		public boolean isEquilateral() {
-			// TODO Write an implementation for this method declaration
-			return false;
+			if (sideOne == sideTwo && sideOne == sideThree) {
+				return true;
+			}
+			else {
+				return false;
+			}
+			
 		}
 
 		public boolean isIsosceles() {
-			// TODO Write an implementation for this method declaration
+			if (sideOne == sideTwo || sideOne == sideThree || sideTwo == sideThree) {
+				return true;
+			}
 			return false;
 		}
 
 		public boolean isScalene() {
-			// TODO Write an implementation for this method declaration
-			return false;
+			if (sideOne == sideTwo || sideOne == sideThree || sideTwo == sideThree) {
+				return false;
+			}
+			return true;
 		}
 
 	}
@@ -412,8 +436,43 @@ public class EvaluationService {
 	 * 3 + 2*1 + 2*3 + 2 + 1 = 3 + 2 + 6 + 3 = 5 + 9 = 14
 	 */
 	public int getScrabbleScore(String string) {
-		// TODO Write an implementation for this method declaration
-		return 0;
+		int score = 0;
+		String points1 = "aeioulnrst";
+		String points2 = "dg";
+		String points3 = "bcmp";
+		String points4 = "fhvwy";
+		String points5 = "k";
+		String points8 = "jx";
+		String points10 = "qz";
+		string = string.toLowerCase();
+		String letter = "";
+		for (int count = 0; count < string.length(); count++) {
+			letter += string.charAt(count);
+			if(points1.contains(letter)) {
+				score++;
+			}
+			else if(points2.contains(letter)) {
+				score += 2;
+			}
+			else if(points3.contains(letter)) {
+				score += 3;
+			}
+			else if(points4.contains(letter)) {
+				score += 4;
+			}
+			else if(points5.contains(letter)) {
+				score += 5;
+			}
+			else if(points8.contains(letter)) {
+				score += 8;
+			}
+			else if(points10.contains(letter)) {
+				score += 10;
+			}
+			letter = "";
+		}
+		System.out.println(string + " " + score);
+		return score;
 	}
 
 	/**
