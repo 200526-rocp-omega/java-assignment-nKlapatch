@@ -1,5 +1,7 @@
 package com.revature.eval.java.core;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
@@ -180,12 +182,12 @@ public class EvaluationService {
 	 * 6. Minutes To Years and Days Calculator
 	 * 
 	 * Write a method printYearsAndDays with parameter of type long named minutes.
-	 * The method should not return anything (void) and it needs to calculate the
+	 * The method should return a String, and it needs to calculate the
 	 * years and days from the minutes parameter.
 	 * 
-	 * If the parameter is less than 0, print text "Invalid Value".
+	 * If the parameter is less than 0, return "Invalid Value".
 	 * 
-	 * Otherwise, if the parameter is valid then it needs to print a message in the
+	 * Otherwise, if the parameter is valid then it needs to return a message in the
 	 * format "XX min = YY y and ZZ d".
 	 * 
 	 * XX represents the original value minutes. YY represents the calculated years.
@@ -471,7 +473,6 @@ public class EvaluationService {
 			}
 			letter = "";
 		}
-		System.out.println(string + " " + score);
 		return score;
 	}
 
@@ -509,7 +510,28 @@ public class EvaluationService {
 	 * NANP-countries, only 1 is considered a valid country code.
 	 */
 	public String cleanPhoneNumber(String string) {
-		return null;
+		String extraChars = "+-(). ";
+		String cleanNumber = "";
+		String curChar = "";
+		boolean firstNumFound = false;
+		for(int count = 0; count < string.length(); count++) {
+			if(string.charAt(count) >= '0' && string.charAt(count) <= '9') {
+				if(firstNumFound || string.charAt(count) > '1') {
+					cleanNumber += string.charAt(count);
+				}
+				firstNumFound = true;
+			} else {
+				curChar += string.charAt(count);
+				if(!extraChars.contains(curChar)) {
+					throw new IllegalArgumentException();
+				}
+				curChar = "";
+			}
+		}
+		if (cleanNumber.length() != 10) {
+			throw new IllegalArgumentException();
+		}
+		return cleanNumber;
 	}
 
 	/**
@@ -521,8 +543,17 @@ public class EvaluationService {
 	 * free: 1
 	 */
 	public Map<String, Integer> wordCount(String string) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		Map<String,Integer> wordNums = new HashMap<>();
+		String[] words = string.split(" ");
+		for (String word : words) {
+			if(wordNums.containsKey(word)) {
+				wordNums.put(word, wordNums.get(word) + 1);
+			}
+			else {
+				wordNums.put(word, 1);
+			}
+		}
+		return wordNums;
 	}
 
 	/**
@@ -540,7 +571,20 @@ public class EvaluationService {
 	 * a number is an Armstrong number.
 	 */
 	public boolean isArmstrongNumber(int input) {
-		return false;
+		int sum = 0;
+		String inputString = Integer.toString(input);
+		int digits = inputString.length();
+		if (inputString.contains("-")) {
+			digits--;
+		}
+		int inputCopy = input;
+		int curDigit;
+		while(inputCopy != 0) {
+			curDigit = inputCopy % 10;
+			sum += Math.pow(curDigit, digits);
+			inputCopy /= 10;
+		}
+		return(input == sum) ? true : false;
 	}
 
 	/**
@@ -552,8 +596,18 @@ public class EvaluationService {
 	 * Note that 1 is not a prime number.
 	 */
 	public List<Long> calculatePrimeFactorsOf(long l) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		List<Long> primeFactors = new ArrayList<>();
+		long count = 2;
+		while(count <= l) {
+			if(l % count == 0) {
+				primeFactors.add(count);
+				l /= count;
+			}
+			else {
+				count++;
+			}
+		}
+		return primeFactors;
 	}
 
 	/**
@@ -568,8 +622,25 @@ public class EvaluationService {
 	 * numbers, pretend they don't exist and implement them yourself.
 	 */
 	public int calculateNthPrime(int k) {
-		// TODO Write an implementation for this method declaration
-		return 0;
+		if (k < 1) {
+			throw new IllegalArgumentException();
+		} else {
+			List<Integer> primeInts = new ArrayList<>(); 
+			int count = 2;
+			while(primeInts.size() < k) {
+				boolean isPrime = true;
+				for(Integer prime : primeInts) {
+					if (count % prime == 0)
+						isPrime = false;
+				}
+				if(isPrime) {
+					primeInts.add(count);
+				}
+				count++;
+			}
+			return count;
+		}
+		
 	}
 
 	/**
