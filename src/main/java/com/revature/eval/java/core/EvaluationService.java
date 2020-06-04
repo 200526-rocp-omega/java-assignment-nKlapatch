@@ -2,8 +2,11 @@ package com.revature.eval.java.core;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
+import java.util.Set;
 import java.util.Vector;
 
 public class EvaluationService {
@@ -655,9 +658,16 @@ public class EvaluationService {
 	 * The alphabet used consists of ASCII letters a to z, inclusive, and is case
 	 * insensitive. Input will not contain non-ASCII symbols.
 	 */
+	public static String alphabet = "abcdefghijklmnopqrstuvwxyz";
 	public boolean isPangram(String string) {
-		// TODO Write an implementation for this method declaration
-		return false;
+		string = string.toLowerCase();
+		boolean allLetters = true;
+		for(int count = 0; count < alphabet.length(); count++) {
+			if (!string.contains(Character.toString(alphabet.charAt(count)))) {
+				allLetters = false;
+			}
+		}
+		return allLetters;
 	}
 
 	/**
@@ -672,7 +682,22 @@ public class EvaluationService {
 	 * The sum of these multiples is 78.
 	 */
 	public int getSumOfMultiples(int i, int[] set) {
-		return 0;
+		Set<Integer> multSet = new HashSet<>();
+		
+		for(int num : set) {
+			int product = 0;
+			for(int factor = 1; product < i; factor++) {
+				product = num * factor;
+				if(product < i) {
+					multSet.add(product);
+				}
+			}
+		}
+		int sum = 0;
+		for(int num : multSet) {
+			sum += num;
+		}
+		return sum;
 	}
 	
 	/**
@@ -686,6 +711,7 @@ public class EvaluationService {
 	 */
 	
 	public int[] threeLuckyNumbers() {
+		Random rand = new Random();
 		return null;
 	}
 	
