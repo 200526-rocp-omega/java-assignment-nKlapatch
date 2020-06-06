@@ -546,14 +546,28 @@ public class EvaluationService {
 	 * free: 1
 	 */
 	public Map<String, Integer> wordCount(String string) {
+		String currentWord = "";
 		Map<String,Integer> wordNums = new HashMap<>();
-		String[] words = string.split(" ");
-		for (String word : words) {
-			if(wordNums.containsKey(word)) {
-				wordNums.put(word, wordNums.get(word) + 1);
+		for (int count = 0; count < string.length(); count++) {
+			if(Character.isAlphabetic(string.charAt(count))) {
+				currentWord += string.charAt(count);
+			}
+			else if (currentWord != "") {
+				if(wordNums.containsKey(currentWord)) {
+					wordNums.put(currentWord.toString(), wordNums.get(currentWord) + 1);
+				}
+				else {
+					wordNums.put(currentWord, 1);
+				}
+				currentWord = "";
+			}
+		}
+		if (currentWord != "") {
+			if(wordNums.containsKey(currentWord)) {
+				wordNums.put(currentWord.toString(), wordNums.get(currentWord) + 1);
 			}
 			else {
-				wordNums.put(word, 1);
+				wordNums.put(currentWord, 1);
 			}
 		}
 		return wordNums;
@@ -629,8 +643,9 @@ public class EvaluationService {
 			throw new IllegalArgumentException();
 		} else {
 			List<Integer> primeInts = new ArrayList<>(); 
-			int count = 2;
+			int count = 1;
 			while(primeInts.size() < k) {
+				count++;
 				boolean isPrime = true;
 				for(Integer prime : primeInts) {
 					if (count % prime == 0)
@@ -639,7 +654,6 @@ public class EvaluationService {
 				if(isPrime) {
 					primeInts.add(count);
 				}
-				count++;
 			}
 			return count;
 		}
@@ -711,8 +725,9 @@ public class EvaluationService {
 	 */
 	
 	public int[] threeLuckyNumbers() {
-		Random rand = new Random();
-		return null;
+		Random numSource = new Random();
+		int[] casinoNumbers = {numSource.nextInt(99) + 1, numSource.nextInt(99) + 1, numSource.nextInt(99) + 1};
+		return casinoNumbers;
 	}
 	
 	/*
@@ -726,6 +741,10 @@ public class EvaluationService {
 	 */
 	
 	public int guessingGame(int x, int y) {
-		return 0;
+		double num = 0;
+		for(int count = 0; count < 40; count++) {
+			num = Math.random() * (y - x) + x;
+		}
+		return (int)Math.round(num);
 	}
 }
